@@ -11,7 +11,19 @@ app.use(cors());
 app.post("/register", async (req, res) => {
     let users = new Users(req.body);
     let resuult = await users.save();
-    res.send(resuult);
+    res.send({
+        status: 200,
+        message: "You have successfully registered on the page"
+    });
+})
+
+app.post("/sign-up", async (req, res) => {
+    // let users = new Users(req.body);
+    // let resuult = await users.save();
+    res.send({
+        status: 200,
+        message: "You have successfully sign-up"
+    });
 })
 
 // app.get('/', (req, res) => {
