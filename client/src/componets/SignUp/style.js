@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Input, Select } from 'antd';
 
 export const RsgisterBody = styled.div`
     width: 100%;
@@ -24,15 +25,72 @@ export const RsgisterTitle = styled.h1`
     font-size: 50px;
 `;
 
-export const RsgisterInput = styled.input`
+export const RsgisterInput = styled(Input)`
     width: 500px;
     height: 40px;
     padding: 10px;
     border: none;
-    border-bottom: 1px solid #3f51b5;
-    margin-top: 30px;
+    border-bottom: 1px solid #3f51b5a1;
+    margin-top: 10px;
+    font-size: 15px;
+
+    &:focus{
+        outline: none !important;
+        border-color: #1d32a7 !important;
+        box-shadow: none !important;
+    } 
+
+    &:hover{
+        border-color: #1d32a7 !important;
+    }
+`;
+
+export const RsgisterInputPassword = styled(Input.Password)`
+    width: 500px;
+    height: 40px;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid #3f51b5a1;
+    margin-top: 10px;
     font-size: 15px;
     outline: none;
+
+    &:focus{
+        outline: none !important;
+        border-color: #1d32a7 !important;
+        box-shadow: none !important;
+    } 
+
+    &:hover{
+        border-color: #1d32a7 !important;
+    }
+`;
+
+export const RsgisterInputSelect = styled(Select)`
+    width: 500px !important;
+    height: 40px;
+    border: none;
+    border-bottom: 1px solid #3f51b5a1;
+    margin-top: 10px;
+    font-size: 15px;
+    outline: none;
+
+    &:hover{
+        border-color: #1d32a7 !important;
+        transition: .2s;
+    }
+    
+    .ant-select-selection-search{
+        width: 100% !important;
+    }
+
+    .ant-select-selector{
+        border: none !important;
+        outline: none !important;
+        border-color: none !important;
+        box-shadow: none !important;
+    }
+ }
 `;
 
 export const RsgisterButton = styled.button`
