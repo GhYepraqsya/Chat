@@ -62,23 +62,25 @@ const SignUp = ({ signUp }) => {
   }), {})
 
   const handelChange = (e, key) => {
-    setUser({ [key]: e.target.value })
+    setUser({ [key]: e.target.value || e.value })
     // setUserData({
     //     ...userData,
     //     [key]: e.target.value,
     // })
   }
 
+  console.log(Object.keys(user).length);
   const hendelClick = () => {
-    // const { firstname, lastname, email, password } = userData;
+    if (Object.keys(user).length < 5){
+      return
+    }
 
-    // if (!firstname && !lastname && !email && !password) {
-    //     return
-    // };
-
-    signUp(user);
+      signUp(user);
   }
 
+  function handleChangeSelect(value) {
+    setUser({ gender: value })
+  }
 
 
   return (
@@ -87,36 +89,25 @@ const SignUp = ({ signUp }) => {
         <RsgisterTitle>Sign Up</RsgisterTitle>
         <Form
           {...formItemLayout}
-          // form={form}
           name="register"
-          // onFinish={onFinish}
-          // initialValues={{
-          //   residence: ['zhejiang', 'hangzhou', 'xihu'],
-          //   prefix: '86',
-          // }}
           scrollToFirstError
         >
           <Form.Item
             name="firstName"
-            // label="Firstname"
-            // tooltip="What do you want others to call you?"
             rules={[{ required: true, message: 'Please input your firstname!', whitespace: true }]}
           >
-            <RsgisterInput placeholder='Firstname' />
+            <RsgisterInput placeholder='Firstname' value={user.firstname || ""} onChange={(e) => handelChange(e, 'firstname')} />
           </Form.Item>
 
           <Form.Item
             name="lastName"
-            // label="Lastname"
-            // tooltip="What do you want others to call you?"
             rules={[{ required: true, message: 'Please input your lastname!', whitespace: true }]}
           >
-            <RsgisterInput placeholder='Lastname' />
+            <RsgisterInput placeholder='Lastname' value={user.lastname || ""} onChange={(e) => handelChange(e, 'lastname')} />
           </Form.Item>
 
           <Form.Item
             name="email"
-            // label="E-mail"
             rules={[
               {
                 type: 'email',
@@ -128,12 +119,11 @@ const SignUp = ({ signUp }) => {
               },
             ]}
           >
-            <RsgisterInput placeholder='E-mail' />
+            <RsgisterInput placeholder='E-mail' value={user.email || ""} onChange={(e) => handelChange(e, 'email')} />
           </Form.Item>
 
           <Form.Item
             name="password"
-            // label="Password"
             rules={[
               {
                 required: true,
@@ -142,12 +132,11 @@ const SignUp = ({ signUp }) => {
             ]}
             hasFeedback
           >
-            <RsgisterInputPassword placeholder='Password' />
+            <RsgisterInputPassword placeholder='Password' value={user.password || ""} onChange={(e) => handelChange(e, 'password')} />
           </Form.Item>
 
           <Form.Item
             name="confirm"
-            // label="Confirm Password"
             dependencies={['password']}
             hasFeedback
             rules={[
@@ -170,10 +159,9 @@ const SignUp = ({ signUp }) => {
 
           <Form.Item
             name="gender"
-            // label="Gender"
             rules={[{ required: true, message: 'Please select gender!' }]}
           >
-            <RsgisterInputSelect placeholder="select your gender">
+            <RsgisterInputSelect placeholder="select your gender" value={user.gender || []} onChange={handleChangeSelect}>
               <Select.Option value="male">Male</Select.Option>
               <Select.Option value="female">Female</Select.Option>
               <Select.Option value="other">Other</Select.Option>
@@ -195,18 +183,14 @@ const SignUp = ({ signUp }) => {
             </Checkbox>
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
-              Register
+          <div>
+            <Button type="primary" htmlType='submit' onClick={hendelClick}>
+              Sign Up
             </Button>
+          </div>
+
           </Form.Item>
         </Form>
-        {/* <RsgisterForm>
-                    <Input type='text' placeholder='Firstname' value={user.firstname || ""} onChange={(e) => handelChange(e, 'firstname')} />
-                    <Input type='text' placeholder='Lastname' value={user.lastname || ""} onChange={(e) => handelChange(e, 'lastname')} />
-                    <Input type='email' placeholder='Email' value={user.email || ""} onChange={(e) => handelChange(e, 'email')} />
-                    <Input type='password' placeholder='Password' value={user.password || ""} onChange={(e) => handelChange(e, 'password')} />
-                    <Button type='primary' shape="round"  size="large" onClick={hendelClick}>Sign Up</Button>
-                </RsgisterForm> */}
       </RsgisterBody>
     </>
   )

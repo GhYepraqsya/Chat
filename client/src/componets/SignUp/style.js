@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Input, Select } from 'antd';
+import { Input, Select, Button } from 'antd';
 
 export const RsgisterBody = styled.div`
     width: 100%;
@@ -59,11 +59,13 @@ export const RsgisterInputPassword = styled(Input.Password)`
         outline: none !important;
         border-color: #1d32a7 !important;
         box-shadow: none !important;
+        border-right-width:0 !important;
     } 
 
     &:hover{
         border-color: #1d32a7 !important;
     }
+   }
 `;
 
 export const RsgisterInputSelect = styled(Select)`
@@ -93,7 +95,7 @@ export const RsgisterInputSelect = styled(Select)`
  }
 `;
 
-export const RsgisterButton = styled.button`
+export const RsgisterButton = styled(Button)`
     width: 400px;
     height: 45px;
     padding: 10px;
@@ -103,4 +105,8 @@ export const RsgisterButton = styled.button`
     font-size: 15px;
     outline: none;
     color: #ffffff;
+    
+    .ant-row{
+        background: #3f51b5 !important;
+    }
 `;
