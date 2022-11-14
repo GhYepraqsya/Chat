@@ -8,13 +8,28 @@ const Users = require('./db/Users')
 app.use(express.json());
 app.use(cors());
 
-app.post("/register", async (req, res) => {
-    let users = new Users(req.body);
-    let result = await users.save();
-    res.send({
-        status: 200,
-        message: "You have successfully registered on the page"
-    });
+app.post("/sign-in", async (req, res) => {
+    // console.log(req.body);
+    let user = await Users.findOne(req.body)
+
+    if(user){
+        res.send({
+            user
+        })
+    } else{
+        res.send({
+            status: 403,
+            message: "error"
+        })
+    }
+
+    
+    
+    // let result = await users.save();
+    // res.send({
+    //     status: 200,
+    //     message: "You have successfully registered on the page"
+    // });
 })
 
 app.post("/sign-up", async (req, res) => {

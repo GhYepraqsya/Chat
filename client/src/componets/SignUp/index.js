@@ -1,37 +1,22 @@
-import React, { useReducer, useState } from 'react';
-import axios from 'axios'
+import React, { useReducer } from 'react';
 import {
   RsgisterBody,
-  RsgisterButton,
-  RsgisterForm,
+  RsgisterDatePicker,
   RsgisterInput,
   RsgisterInputPassword,
   RsgisterInputSelect,
   RsgisterTitle
 } from './style'
-import { useSelector } from 'react-redux';
 import {
-  AutoComplete,
   Button,
-  Cascader,
-  Checkbox,
-  Col,
   Form,
-  Input,
-  InputNumber,
-  Row,
   Select,
 } from 'antd';
 import * as actions from '../../redux/action'
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
 
 const SignUp = ({ signUp }) => {
-  // const [userData, setUserData] = useState({
-  //     firstname: "",
-  //     lastname: "",
-  //     email: "",
-  //     password: ""
-  // })
 
   const formItemLayout = {
     labelCol: {
@@ -55,31 +40,38 @@ const SignUp = ({ signUp }) => {
       },
     },
   };
+  const config = {
+    rules: [{ type: 'object', required: true, message: 'Please select time!' }],
+  };
 
   const [user, setUser] = useReducer((state, action) => ({
     ...state,
     ...action
   }), {})
+  const navigate = useNavigate();
 
   const handelChange = (e, key) => {
-    setUser({ [key]: e.target.value || e.value })
-    // setUserData({
-    //     ...userData,
-    //     [key]: e.target.value,
-    // })
-  }
-
-  console.log(Object.keys(user).length);
-  const hendelClick = () => {
-    if (Object.keys(user).length < 5){
+    if (key === "gender") {
+      setUser({ [key]: e });
       return
     }
 
-      signUp(user);
+    if (key === "date") {
+      setUser({ [key]: e._d });
+      return
+    }
+
+    setUser({ [key]: e.target.value })
   }
 
-  function handleChangeSelect(value) {
-    setUser({ gender: value })
+  const hendelClick = () => {
+    if (Object.keys(user).length < 6) {
+      return
+    }
+
+    signUp(user).then((res) => {
+      navigate('/sign-in')
+    });
   }
 
 
@@ -105,7 +97,19 @@ const SignUp = ({ signUp }) => {
           >
             <RsgisterInput placeholder='Lastname' value={user.lastname || ""} onChange={(e) => handelChange(e, 'lastname')} />
           </Form.Item>
-
+          <Form.Item
+            name="gender"
+            rules={[{ required: true, message: 'Please select gender!' }]}
+          >
+            <Form.Item name="date-picker"  {...config}>
+              <RsgisterDatePicker placeholder='Date Picker' onChange={(e) => handelChange(e, 'date')} />
+            </Form.Item>
+            <RsgisterInputSelect placeholder="select your gender" value={user.gender || []} onChange={(e) => handelChange(e, 'gender')}>
+              <Select.Option value="male">Male</Select.Option>
+              <Select.Option value="female">Female</Select.Option>
+              <Select.Option value="other">Other</Select.Option>
+            </RsgisterInputSelect>
+          </Form.Item>
           <Form.Item
             name="email"
             rules={[
@@ -156,38 +160,12 @@ const SignUp = ({ signUp }) => {
           >
             <RsgisterInputPassword placeholder='Confirm Password' />
           </Form.Item>
-
-          <Form.Item
-            name="gender"
-            rules={[{ required: true, message: 'Please select gender!' }]}
-          >
-            <RsgisterInputSelect placeholder="select your gender" value={user.gender || []} onChange={handleChangeSelect}>
-              <Select.Option value="male">Male</Select.Option>
-              <Select.Option value="female">Female</Select.Option>
-              <Select.Option value="other">Other</Select.Option>
-            </RsgisterInputSelect>
-          </Form.Item>
-          <Form.Item
-            name="agreement"
-            valuePropName="checked"
-            rules={[
-              {
-                validator: (_, value) =>
-                  value ? Promise.resolve() : Promise.reject(new Error('Should accept agreement')),
-              },
-            ]}
-            {...tailFormItemLayout}
-          >
-            <Checkbox>
-              I have read the <a href="">agreement</a>
-            </Checkbox>
-          </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-          <div>
-            <Button type="primary" htmlType='submit' onClick={hendelClick}>
-              Sign Up
-            </Button>
-          </div>
+            <div>
+              <Button type="primary" htmlType='submit' onClick={hendelClick}>
+                Sign Up
+              </Button>
+            </div>
 
           </Form.Item>
         </Form>

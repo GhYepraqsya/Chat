@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Input, Select, Button } from 'antd';
+import { Input, Select, Button, DatePicker } from 'antd';
 
 export const RsgisterBody = styled.div`
     width: 100%;
@@ -26,6 +26,26 @@ export const RsgisterTitle = styled.h1`
 `;
 
 export const RsgisterInput = styled(Input)`
+    width: 500px;
+    height: 40px;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid #3f51b5a1;
+    margin-top: 10px;
+    font-size: 15px;
+
+    &:focus{
+        outline: none !important;
+        border-color: #1d32a7 !important;
+        box-shadow: none !important;
+    } 
+
+    &:hover{
+        border-color: #1d32a7 !important;
+    }
+`;
+
+export const RsgisterDatePicker = styled(DatePicker)`
     width: 500px;
     height: 40px;
     padding: 10px;
